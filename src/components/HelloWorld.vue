@@ -1,17 +1,15 @@
 <template>
   <div class="hello flex items-center justify-center">
-    <form
-      @submit.prevent="display()"
-      name="calc"
-      class="calc m-3 p-3 text-center"
-    >
+    <form @submit.prevent="" name="calc" class="calc m-3 p-3 text-center">
       <div name="display" class="display text-white p-8 my-3 rounded-lg">
         {{ calcValue || 0 }}
       </div>
       <div class="row no-gutters max-w-xs text-center">
         <div class="col-3" v-for="n in calculatorElements" :key="n">
           <div
-            class="number text-center lead text-white m-1 py-1 px-4 rounded cursor-pointer"
+            class="number text-center lead m-1 py-1 px-4 rounded cursor-pointer"
+            :class="{ clear: ['c'].includes(n) }"
+            @click="action(n)"
           >
             {{ n }}
           </div>
@@ -54,11 +52,11 @@ export default {
   },
 
   methods: {
-    display: function () {
-      var btn = document.querySelector(".btn");
-      this.cacValue = btn.value;
-      console.log(this.calcValue);
-      console.log(btn.value);
+    action(n) {
+      /* Append value */
+      if (!isNaN(n) || n === ".") {
+        this.calcValue += n + "";
+      }
     },
   },
 };
@@ -77,19 +75,18 @@ export default {
   border-color: #97fff4;
   border-width: 3px;
   border-radius: 10px;
-  color: #97fff4;
   box-shadow: 0 0 4px 3px #f144e0;
+  color: white;
 }
 
-// .clear {
-//   color: #e74c3c;
-//   background-color: transparent;
-//   border-color: #e74c3c;
-//   border-width: 3px;
-//   border-radius: 10px;
-//   text-align: center;
-//   box-shadow: 0 0 4px 3px #e74c3c;
-// }
+.clear {
+  color: #e74c3c;
+  background-color: transparent;
+  border-color: #e74c3c;
+  border-width: 3px;
+  border-radius: 10px;
+  box-shadow: 0 0 4px 3px #e74c3c;
+}
 
 .display {
   border-color: #ffbbff;
