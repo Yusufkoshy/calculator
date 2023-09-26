@@ -11,7 +11,7 @@
         <div class="row no-gutters max-w-xs text-center">
           <div class="col-3" v-for="n in calculatorElements" :key="n">
             <div
-              class="number text-center lead m-1 py-1 px-4 rounded cursor-pointer"
+              class="number text-center lead m-1 py-1 px-4 rounded-xl cursor-pointer"
               :class="{ clear: ['C'].includes(n) }"
               @click="action(n)"
             >
@@ -120,6 +120,7 @@ export default {
 }
 
 .display {
+  border-radius: 10px;
   border-color: #ffbbff;
   border-width: 2px;
   outline: #f144e0 solid 2px;
