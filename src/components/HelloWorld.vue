@@ -1,21 +1,26 @@
 <template>
-  <div class="hello flex items-center justify-center">
-    <form @submit.prevent="" name="calc" class="calc m-3 p-3 text-center">
-      <div name="display" class="display text-white p-8 my-3 rounded-lg">
-        {{ calcValue || 0 }}
-      </div>
-      <div class="row no-gutters max-w-xs text-center">
-        <div class="col-3" v-for="n in calculatorElements" :key="n">
-          <div
-            class="number text-center lead m-1 py-1 px-4 rounded cursor-pointer"
-            :class="{ clear: ['c'].includes(n) }"
-            @click="action(n)"
-          >
-            {{ n }}
+  <div class="hello">
+    <div class="line text-white text-center text-5xl m-6 italic font-mono">
+      {{ msg }}
+    </div>
+    <div class="hello flex items-center justify-center">
+      <form @submit.prevent="" name="calc" class="calc m-3 p-3 text-right">
+        <div name="display" class="display text-white p-8 my-3 rounded-lg">
+          {{ calcValue || 0 }}
+        </div>
+        <div class="row no-gutters max-w-xs text-center">
+          <div class="col-3" v-for="n in calculatorElements" :key="n">
+            <div
+              class="number text-center lead m-1 py-1 px-4 rounded cursor-pointer"
+              :class="{ clear: ['C'].includes(n) }"
+              @click="action(n)"
+            >
+              {{ n }}
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -29,7 +34,7 @@ export default {
     return {
       calcValue: "",
       calculatorElements: [
-        "c",
+        "C",
         "*",
         "/",
         "-",
@@ -48,6 +53,8 @@ export default {
         0,
         ".",
       ],
+      operator: null,
+      previousCalculatorValue: "",
     };
   },
 
@@ -57,12 +64,36 @@ export default {
       if (!isNaN(n) || n === ".") {
         this.calcValue += n + "";
       }
+
+      /* Clear Value */
+      if (n === "C") {
+        this.calcValue = "";
+      }
+      /* Percentage */
+      if (n === "%") {
+        this.calcValue = this.calcValue / 100 + "";
+      }
+      /* operators */
+
+      if (["/", "*", "-", "+"].includes(n)) {
+        this.operator = n;
+        this.previousCalculatorValue = this.calcValue;
+        this.calcValue = "";
+      }
+      /* sum */
+      if (n === "=") {
+        this.calcValue = eval(
+          this.previousCalculatorValue + this.operator + this.calcValue
+        );
+
+        this.previousCalculatorValue = "";
+        this.operator = null;
+      }
     },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .calc {
   margin: auto;
@@ -94,5 +125,12 @@ export default {
   outline: #f144e0 solid 2px;
   box-shadow: 0 0 4px 3px #f144e0;
   background-color: #671ec0;
+}
+.hello {
+  background-color: #671ec0;
+}
+
+.line {
+  font-family: "Croissant One", cursive;
 }
 </style>

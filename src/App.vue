@@ -1,5 +1,5 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <HelloWorld msg="Simple Calculator" />
 </template>
 
 <script>
@@ -20,5 +20,9 @@ export default {
   box-sizing: border-box;
   text-decoration: none;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+html {
+  background-color: #671ec0;
 }
 </style>
